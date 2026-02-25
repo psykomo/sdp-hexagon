@@ -5,15 +5,16 @@ import styles from "./page.module.css";
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
   srcDark: string;
+  alt: string;
 };
 
 const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
+  const { srcLight, srcDark, alt, ...rest } = props;
 
   return (
     <>
-      <Image {...rest} src={srcLight} className="imgLight" />
-      <Image {...rest} src={srcDark} className="imgDark" />
+      <Image {...rest} src={srcLight} alt={alt} className="imgLight" />
+      <Image {...rest} src={srcDark} alt={alt} className="imgDark" />
     </>
   );
 };
@@ -66,9 +67,8 @@ export default function Home() {
         <Button 
           variant="secondary" 
           className="min-w-[180px] rounded-full h-12"
-          onClick={() => alert("Hello from docs app!")}
         >
-          Open alert
+          Docs button
         </Button>
       </main>
       <footer className={styles.footer}>

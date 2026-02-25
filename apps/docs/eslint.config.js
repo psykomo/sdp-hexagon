@@ -1,5 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
+import { defineConfig } from "eslint/config";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -13,11 +14,16 @@ const compat = new FlatCompat({
 });
 
 /** @type {import("eslint").Linter.Config[]} */
-export default [
+const eslintConfig = defineConfig([
+  {
+    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
+  },
   ...compat.extends("next/core-web-vitals"),
   {
     rules: {
       "no-unused-vars": "warn",
     },
   },
-];
+]);
+
+export default eslintConfig;

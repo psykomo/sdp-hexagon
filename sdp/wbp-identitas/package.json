@@ -1,0 +1,10 @@
+{
+  "name": "@sdp/wbp-identitas",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@sdp/database": "workspace:^"
+  }
+}

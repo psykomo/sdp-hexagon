@@ -1,0 +1,21 @@
+{
+  "name": "@sdp/database",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "migrate:run": "tsx src/migrate.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.39.1",
+    "postgres": "^3.4.5"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.30.4",
+    "tsx": "^4.19.2",
+    "@types/node": "^20.11.24"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,1135 @@
+{
+  "id": "9ef50ea0-4b6b-40d5-bb4c-b52be06042f2",
+  "prevId": "938a65b5-029e-4796-9226-70d1fd3acc01",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.identitas": {
+      "name": "identitas",
+      "schema": "",
+      "columns": {
+        "NOMOR_INDUK": {
+          "name": "NOMOR_INDUK",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ID_JENIS_SUKU": {
+          "name": "ID_JENIS_SUKU",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_SUKU_LAIN": {
+          "name": "ID_JENIS_SUKU_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_RAMBUT": {
+          "name": "ID_JENIS_RAMBUT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_MUKA": {
+          "name": "ID_JENIS_MUKA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_PENDIDIKAN": {
+          "name": "ID_JENIS_PENDIDIKAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_TANGAN": {
+          "name": "ID_JENIS_TANGAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_AGAMA": {
+          "name": "ID_JENIS_AGAMA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_AGAMA_LAIN": {
+          "name": "ID_JENIS_AGAMA_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_PEKERJAAN": {
+          "name": "ID_JENIS_PEKERJAAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_PEKERJAAN_LAIN": {
+          "name": "ID_JENIS_PEKERJAAN_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_USER": {
+          "name": "ID_USER",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_BENTUK_MATA": {
+          "name": "ID_BENTUK_MATA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_WARNA_MATA": {
+          "name": "ID_WARNA_MATA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_KEAHLIAN_1": {
+          "name": "ID_JENIS_KEAHLIAN_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_KEAHLIAN_1_LAIN": {
+          "name": "ID_JENIS_KEAHLIAN_1_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_KEAHLIAN_2": {
+          "name": "ID_JENIS_KEAHLIAN_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_KEAHLIAN_2_LAIN": {
+          "name": "ID_JENIS_KEAHLIAN_2_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_HIDUNG": {
+          "name": "ID_JENIS_HIDUNG",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_LEVEL_1": {
+          "name": "ID_JENIS_LEVEL_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_MULUT": {
+          "name": "ID_JENIS_MULUT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_LEVEL_2": {
+          "name": "ID_JENIS_LEVEL_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_WARGANEGARA": {
+          "name": "ID_JENIS_WARGANEGARA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_NEGARA_ASING": {
+          "name": "ID_NEGARA_ASING",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_PROPINSI": {
+          "name": "ID_PROPINSI",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_PROPINSI_LAIN": {
+          "name": "ID_PROPINSI_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_STATUS_PERKAWINAN": {
+          "name": "ID_JENIS_STATUS_PERKAWINAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_JENIS_KELAMIN": {
+          "name": "ID_JENIS_KELAMIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ID_JENIS_KAKI": {
+          "name": "ID_JENIS_KAKI",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_TEMPAT_LAHIR": {
+          "name": "ID_TEMPAT_LAHIR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_TEMPAT_LAHIR_LAIN": {
+          "name": "ID_TEMPAT_LAHIR_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_KOTA": {
+          "name": "ID_KOTA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_KOTA_LAIN": {
+          "name": "ID_KOTA_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_TEMPAT_ASAL": {
+          "name": "ID_TEMPAT_ASAL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_TEMPAT_ASAL_LAIN": {
+          "name": "ID_TEMPAT_ASAL_LAIN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "RESIDIVIS": {
+          "name": "RESIDIVIS",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "RESIDIVIS_COUNTER": {
+          "name": "RESIDIVIS_COUNTER",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_LENGKAP": {
+          "name": "NAMA_LENGKAP",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NIK": {
+          "name": "NIK",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_ALIAS1": {
+          "name": "NAMA_ALIAS1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_ALIAS2": {
+          "name": "NAMA_ALIAS2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_ALIAS3": {
+          "name": "NAMA_ALIAS3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_KECIL1": {
+          "name": "NAMA_KECIL1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_KECIL2": {
+          "name": "NAMA_KECIL2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_KECIL3": {
+          "name": "NAMA_KECIL3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TANGGAL_LAHIR": {
+          "name": "TANGGAL_LAHIR",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "IS_WBP_BERESIKO_TINGGI": {
+          "name": "IS_WBP_BERESIKO_TINGGI",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IS_PENGARUH_TERHADAP_MASYARAKAT": {
+          "name": "IS_PENGARUH_TERHADAP_MASYARAKAT",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ALAMAT": {
+          "name": "ALAMAT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ALAMAT_ALTERNATIF": {
+          "name": "ALAMAT_ALTERNATIF",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "KODEPOS": {
+          "name": "KODEPOS",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TELEPON": {
+          "name": "TELEPON",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ALAMAT_PEKERJAAN": {
+          "name": "ALAMAT_PEKERJAAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "KETERANGAN_PEKERJAAN": {
+          "name": "KETERANGAN_PEKERJAAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "MINAT": {
+          "name": "MINAT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NM_AYAH": {
+          "name": "NM_AYAH",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TMP_TGL_AYAH": {
+          "name": "TMP_TGL_AYAH",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NM_IBU": {
+          "name": "NM_IBU",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TMP_TGL_IBU": {
+          "name": "TMP_TGL_IBU",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NM_SAUDARA": {
+          "name": "NM_SAUDARA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ANAKKE": {
+          "name": "ANAKKE",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "JML_SAUDARA": {
+          "name": "JML_SAUDARA",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "JML_ISTRI_SUAMI": {
+          "name": "JML_ISTRI_SUAMI",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NM_ISTRI_SUAMI": {
+          "name": "NM_ISTRI_SUAMI",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TMP_TGL_ISTRI_SUAMI": {
+          "name": "TMP_TGL_ISTRI_SUAMI",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "JML_ANAK": {
+          "name": "JML_ANAK",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NM_ANAK": {
+          "name": "NM_ANAK",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TELEPHONE_KELUARGA": {
+          "name": "TELEPHONE_KELUARGA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TINGGI": {
+          "name": "TINGGI",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "BERAT": {
+          "name": "BERAT",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CACAT": {
+          "name": "CACAT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CIRI": {
+          "name": "CIRI",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FOTO_DEPAN": {
+          "name": "FOTO_DEPAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FOTO_KANAN": {
+          "name": "FOTO_KANAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FOTO_KIRI": {
+          "name": "FOTO_KIRI",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FOTO_CIRI_1": {
+          "name": "FOTO_CIRI_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FOTO_CIRI_2": {
+          "name": "FOTO_CIRI_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "FOTO_CIRI_3": {
+          "name": "FOTO_CIRI_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "KONSOLIDASI": {
+          "name": "KONSOLIDASI",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "KONSOLIDASI_IMAGE": {
+          "name": "KONSOLIDASI_IMAGE",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_KACAMATA": {
+          "name": "ID_KACAMATA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_TELINGA": {
+          "name": "ID_TELINGA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_WARNAKULIT": {
+          "name": "ID_WARNAKULIT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_BENTUKRAMBUT": {
+          "name": "ID_BENTUKRAMBUT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_BENTUKBIBIR": {
+          "name": "ID_BENTUKBIBIR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_LENGAN": {
+          "name": "ID_LENGAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NOMOR_INDUK_NASIONAL": {
+          "name": "NOMOR_INDUK_NASIONAL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IS_VERIFIKASI": {
+          "name": "IS_VERIFIKASI",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IS_DELETED": {
+          "name": "IS_DELETED",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED": {
+          "name": "CREATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED_BY": {
+          "name": "CREATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED": {
+          "name": "UPDATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED_BY": {
+          "name": "UPDATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lembaga": {
+      "name": "lembaga",
+      "schema": "",
+      "columns": {
+        "ID": {
+          "name": "ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "KODE": {
+          "name": "KODE",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NAMA": {
+          "name": "NAMA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "JENIS": {
+          "name": "JENIS",
+          "type": "jenis_lembaga",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ALAMAT": {
+          "name": "ALAMAT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IS_ACTIVE": {
+          "name": "IS_ACTIVE",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "CREATED": {
+          "name": "CREATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED_BY": {
+          "name": "CREATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED": {
+          "name": "UPDATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED_BY": {
+          "name": "UPDATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "lembaga_KODE_unique": {
+          "name": "lembaga_KODE_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "KODE"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.mutasi": {
+      "name": "mutasi",
+      "schema": "",
+      "columns": {
+        "ID": {
+          "name": "ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "NOMOR_INDUK": {
+          "name": "NOMOR_INDUK",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ID_PERKARA": {
+          "name": "ID_PERKARA",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "JENIS_MUTASI": {
+          "name": "JENIS_MUTASI",
+          "type": "jenis_mutasi",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LEMBAGA_ASAL_ID": {
+          "name": "LEMBAGA_ASAL_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LEMBAGA_TUJUAN_ID": {
+          "name": "LEMBAGA_TUJUAN_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TANGGAL_MUTASI": {
+          "name": "TANGGAL_MUTASI",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NOMOR_SURAT": {
+          "name": "NOMOR_SURAT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ALASAN": {
+          "name": "ALASAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "STATUS_MUTASI": {
+          "name": "STATUS_MUTASI",
+          "type": "status_mutasi",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED": {
+          "name": "CREATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED_BY": {
+          "name": "CREATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED": {
+          "name": "UPDATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED_BY": {
+          "name": "UPDATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "mutasi_NOMOR_INDUK_identitas_NOMOR_INDUK_fk": {
+          "name": "mutasi_NOMOR_INDUK_identitas_NOMOR_INDUK_fk",
+          "tableFrom": "mutasi",
+          "tableTo": "identitas",
+          "columnsFrom": [
+            "NOMOR_INDUK"
+          ],
+          "columnsTo": [
+            "NOMOR_INDUK"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "mutasi_ID_PERKARA_perkara_ID_fk": {
+          "name": "mutasi_ID_PERKARA_perkara_ID_fk",
+          "tableFrom": "mutasi",
+          "tableTo": "perkara",
+          "columnsFrom": [
+            "ID_PERKARA"
+          ],
+          "columnsTo": [
+            "ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "mutasi_LEMBAGA_ASAL_ID_lembaga_ID_fk": {
+          "name": "mutasi_LEMBAGA_ASAL_ID_lembaga_ID_fk",
+          "tableFrom": "mutasi",
+          "tableTo": "lembaga",
+          "columnsFrom": [
+            "LEMBAGA_ASAL_ID"
+          ],
+          "columnsTo": [
+            "ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "mutasi_LEMBAGA_TUJUAN_ID_lembaga_ID_fk": {
+          "name": "mutasi_LEMBAGA_TUJUAN_ID_lembaga_ID_fk",
+          "tableFrom": "mutasi",
+          "tableTo": "lembaga",
+          "columnsFrom": [
+            "LEMBAGA_TUJUAN_ID"
+          ],
+          "columnsTo": [
+            "ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.perkara": {
+      "name": "perkara",
+      "schema": "",
+      "columns": {
+        "ID": {
+          "name": "ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "NOMOR_INDUK": {
+          "name": "NOMOR_INDUK",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NOMOR_PERKARA": {
+          "name": "NOMOR_PERKARA",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TANGGAL_MASUK": {
+          "name": "TANGGAL_MASUK",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "JENIS_KASUS": {
+          "name": "JENIS_KASUS",
+          "type": "jenis_kasus",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "PASAL": {
+          "name": "PASAL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_PENANGANAN": {
+          "name": "NAMA_PENANGANAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_POLRES": {
+          "name": "NAMA_POLRES",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_KEJAKSAAN": {
+          "name": "NAMA_KEJAKSAAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_PENGADILAN": {
+          "name": "NAMA_PENGADILAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TANGGAL_PUTUSAN": {
+          "name": "TANGGAL_PUTUSAN",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "STATUS_WBP": {
+          "name": "STATUS_WBP",
+          "type": "status_wbp",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ID_LEMBAGA_ASAL": {
+          "name": "ID_LEMBAGA_ASAL",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED": {
+          "name": "CREATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED_BY": {
+          "name": "CREATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED": {
+          "name": "UPDATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED_BY": {
+          "name": "UPDATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "perkara_NOMOR_INDUK_identitas_NOMOR_INDUK_fk": {
+          "name": "perkara_NOMOR_INDUK_identitas_NOMOR_INDUK_fk",
+          "tableFrom": "perkara",
+          "tableTo": "identitas",
+          "columnsFrom": [
+            "NOMOR_INDUK"
+          ],
+          "columnsTo": [
+            "NOMOR_INDUK"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "perkara_ID_LEMBAGA_ASAL_lembaga_ID_fk": {
+          "name": "perkara_ID_LEMBAGA_ASAL_lembaga_ID_fk",
+          "tableFrom": "perkara",
+          "tableTo": "lembaga",
+          "columnsFrom": [
+            "ID_LEMBAGA_ASAL"
+          ],
+          "columnsTo": [
+            "ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tahapan_perkara": {
+      "name": "tahapan_perkara",
+      "schema": "",
+      "columns": {
+        "ID": {
+          "name": "ID",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "ID_PERKARA": {
+          "name": "ID_PERKARA",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "NOMOR_REGISTRASI": {
+          "name": "NOMOR_REGISTRASI",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "KODE_TAHAPAN": {
+          "name": "KODE_TAHAPAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NAMA_TAHAPAN": {
+          "name": "NAMA_TAHAPAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TANGGAL_MULAI": {
+          "name": "TANGGAL_MULAI",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TANGGAL_SELESAI": {
+          "name": "TANGGAL_SELESAI",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LEMBAGA_ID": {
+          "name": "LEMBAGA_ID",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CATATAN": {
+          "name": "CATATAN",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED": {
+          "name": "CREATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "CREATED_BY": {
+          "name": "CREATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED": {
+          "name": "UPDATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "UPDATED_BY": {
+          "name": "UPDATED_BY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tahapan_perkara_ID_PERKARA_perkara_ID_fk": {
+          "name": "tahapan_perkara_ID_PERKARA_perkara_ID_fk",
+          "tableFrom": "tahapan_perkara",
+          "tableTo": "perkara",
+          "columnsFrom": [
+            "ID_PERKARA"
+          ],
+          "columnsTo": [
+            "ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "tahapan_perkara_LEMBAGA_ID_lembaga_ID_fk": {
+          "name": "tahapan_perkara_LEMBAGA_ID_lembaga_ID_fk",
+          "tableFrom": "tahapan_perkara",
+          "tableTo": "lembaga",
+          "columnsFrom": [
+            "LEMBAGA_ID"
+          ],
+          "columnsTo": [
+            "ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.jenis_kasus": {
+      "name": "jenis_kasus",
+      "schema": "public",
+      "values": [
+        "NARAPIDANA",
+        "TAHANAN"
+      ]
+    },
+    "public.jenis_lembaga": {
+      "name": "jenis_lembaga",
+      "schema": "public",
+      "values": [
+        "RUTAN",
+        "LAPAS",
+        "LEMAS"
+      ]
+    },
+    "public.jenis_mutasi": {
+      "name": "jenis_mutasi",
+      "schema": "public",
+      "values": [
+        "ANTAR_LEMBAGA",
+        "PENGELOLAAN"
+      ]
+    },
+    "public.status_mutasi": {
+      "name": "status_mutasi",
+      "schema": "public",
+      "values": [
+        "PERMINTAAN",
+        "DALAM_PERJALANAN",
+        "SELESAI"
+      ]
+    },
+    "public.status_wbp": {
+      "name": "status_wbp",
+      "schema": "public",
+      "values": [
+        "TAHANAN",
+        "NARAPIDANA",
+        "BEBAS"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -1,135 +1,110 @@
-# Turborepo starter
+# Hexagon - SDP (Sistem Database Permasyarakten)
 
-This Turborepo starter is maintained by the Turborepo core team.
+Monorepo for Sistem Database Permasyarakten - Indonesian correctional management system (WBP - Warga Binaan Permasyarakten).
 
-## Using this example
+## Tech Stack
 
-Run the following command:
+| Layer | Technology |
+|-------|------------|
+| Build | Turborepo, pnpm 9.0 |
+| Frontend | Next.js 15, React, TypeScript, Tailwind CSS |
+| Backend | Express.js, Drizzle ORM |
+| Database | PostgreSQL 16 |
+| Testing | Vitest |
 
-```sh
-npx create-turbo@latest
+## Project Structure
+
+```
+hexagon/
+├── apps/
+│   ├── web/           # Main Next.js application
+│   └── docs/          # Documentation site
+├── sdp/
+│   ├── database/      # Drizzle schema & migrations
+│   ├── runtime/       # Runtime utilities
+│   ├── shared/        # Shared types & config
+│   └── wbp-identitas/ # WBP identity API server
+└── packages/          # Shared packages (reserved)
 ```
 
-## What's inside?
+## Getting Started
 
-This Turborepo includes the following packages/apps:
+### Prerequisites
 
-### Apps and Packages
+- Node.js >= 20.9.0
+- pnpm 9.0+
+- Docker & Docker Compose
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### Setup Database
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+```bash
+# Start PostgreSQL container
+docker-compose up -d
+```
 
-### Utilities
+### Install Dependencies
 
-This Turborepo has some additional tools already setup for you:
+```bash
+pnpm install
+```
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Development
+
+```bash
+# Run all apps
+pnpm dev
+
+# Run specific app
+pnpm dev --filter=web
+pnpm dev --filter=wbp-identitas
+```
 
 ### Build
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+pnpm build
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### Type Check
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm check-types
 ```
 
-### Develop
+## Database
 
-To develop all apps and packages, run the following command:
+### Schemas
 
-```
-cd my-turborepo
+- `identitas` - WBP identity data
+- `perkara` - Case/violation records
+- `mutasi` - Inter-prison transfers
+- `lembaga` - Correctional institutions
+- `tahapan_perkara` - Case stages
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+### Migration
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+cd sdp/database
+pnpm migrate
 ```
 
-### Remote Caching
+## Architecture
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+Using Clean Architecture with the following pattern:
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+src/
+├── port/      # Interface/contract
+├── repository/ # Data access implementation
+├── service/  # Business logic
+├── routes/   # HTTP handlers
+└── types/    # Type definitions
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## Environment
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+Copy `.env.example` to `.env` and adjust the values.
 
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/sdp
 ```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)

@@ -125,6 +125,49 @@ const all = await service.getAll();
 
 ---
 
+## Authorization & Context
+
+The service automatically enforces permissions when used with `@sdp/runtime`:
+
+```typescript
+import { createRuntime, withContext } from '@sdp/runtime';
+import { identitasService } from '@sdp/wbp-identitas';
+
+// Create runtime (singleton)
+const runtime = createRuntime();
+
+// Create context per request
+const context = {
+  userId: 'user-123',
+  userRoles: ['admin'],
+  permissions: ['identitas:read', 'identitas:write', 'identitas:delete'],
+  requestId: crypto.randomUUID(),
+  startedAt: new Date(),
+};
+
+// Wrap with context - all service calls here have access to it
+const result = withContext(context, () => {
+  // These operations check permissions automatically
+  await identitasService.getAll();    // requires identitas:read
+  await identitasService.create(data); // requires identitas:write
+  await identitasService.delete('123'); // requires identitas:delete
+});
+```
+
+### Required Permissions
+
+| Operation | Required Permission |
+|-----------|---------------------|
+| `getById`, `getAll`, `search`, `count`, `exists` | `identitas:read` (optional) |
+| `create`, `update` | `identitas:write` |
+| `delete` | `identitas:delete` |
+
+The service logs all operations with `requestId` and `userId` for auditing.
+
+See [@sdp/runtime](../runtime/README.md) for full context documentation.
+
+---
+
 ## Configuration
 
 ### Environment Variables

@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "license": "MIT",
   "dependencies": {
+    "@sdp/shared": "workspace:^",
     "@sdp/wbp-identitas": "workspace:^"
   }
 }

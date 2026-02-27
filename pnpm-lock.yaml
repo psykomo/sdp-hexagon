@@ -84,6 +84,9 @@ importers:
       '@base-ui/react':
         specifier: ^1.2.0
         version: 1.2.0(@types/react@19.2.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@sdp/runtime':
+        specifier: workspace:^
+        version: link:../../sdp/runtime
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.1
@@ -161,17 +164,27 @@ importers:
 
   sdp/runtime:
     dependencies:
+      '@sdp/shared':
+        specifier: workspace:^
+        version: link:../shared
       '@sdp/wbp-identitas':
         specifier: workspace:^
         version: link:../wbp-identitas
 
-  sdp/shared: {}
+  sdp/shared:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.15.3
 
   sdp/wbp-identitas:
     dependencies:
       '@sdp/database':
         specifier: workspace:^
         version: link:../database
+      '@sdp/shared':
+        specifier: workspace:^
+        version: link:../shared
       dotenv:
         specifier: ^16.4.5
         version: 16.6.1

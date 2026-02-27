@@ -1,3 +1,4 @@
+import type { RequestContext } from '@sdp/shared/context';
 import type { IdentitasPort } from './port/identitas-port';
 import type {
   IdentitasDTO,
@@ -22,6 +23,8 @@ interface RequestOptions extends RequestInit {
  * Implements IdentitasPort for remote HTTP calls.
  * Use this when calling the microservice from other packages.
  * 
+ * Context is passed explicitly and used to extract authorization headers, requestId, etc.
+ * 
  * @example
  * import { IdentitasHttpClient } from '@sdp/wbp-identitas';
  * 
@@ -29,48 +32,78 @@ interface RequestOptions extends RequestInit {
  *   baseUrl: process.env.IDENTITAS_SERVICE_URL || 'http://localhost:3001',
  * });
  * 
- * const identitas = await client.getById('12345');
+ * const identitas = await client.getById(context, '12345');
  */
 export class IdentitasHttpClient implements IdentitasPort {
   private baseUrl: string;
   private timeout: number;
-  private headers: Record<string, string>;
+  private defaultHeaders: Record<string, string>;
 
   constructor(config: ClientConfig) {
     this.baseUrl = config.baseUrl.replace(/\/$/, ''); // Remove trailing slash
     this.timeout = config.timeout ?? 30000;
-    this.headers = {
+    this.defaultHeaders = {
       'Content-Type': 'application/json',
       ...config.headers,
     };
   }
 
-  async getById(nomorInduk: string): Promise<IdentitasDTO | null> {
+  private buildHeaders(ctx: RequestContext, extraHeaders?: Record<string, string>): Record<string, string> {
+    const headers: Record<string, string> = {
+      ...this.defaultHeaders,
+      'x-request-id': ctx.requestId,
+      ...extraHeaders,
+    };
+    
+    // Pass user info via headers if available
+    if (ctx.userId) {
+      headers['x-user-id'] = ctx.userId;
+    }
+    if (ctx.userRoles.length > 0) {
+      headers['x-user-roles'] = ctx.userRoles.join(',');
+    }
+    if (ctx.permissions.length > 0) {
+      headers['x-user-permissions'] = ctx.permissions.join(',');
+    }
+    if (ctx.ip) {
+      headers['x-forwarded-for'] = ctx.ip;
+    }
+    if (ctx.userAgent) {
+      headers['user-agent'] = ctx.userAgent;
+    }
+    
+    return headers;
+  }
+
+  async getById(ctx: RequestContext, nomorInduk: string): Promise<IdentitasDTO | null> {
     return this.request<IdentitasDTO | null>(
+      ctx,
       `/api/identitas/${encodeURIComponent(nomorInduk)}`,
       { method: 'GET' }
     );
   }
 
-  async getAll(limit: number = 10, offset: number = 0): Promise<IdentitasListResponse> {
+  async getAll(ctx: RequestContext, limit: number = 10, offset: number = 0): Promise<IdentitasListResponse> {
     const params = new URLSearchParams({
       limit: String(limit),
       offset: String(offset),
     });
     
     return this.request<IdentitasListResponse>(
+      ctx,
       `/api/identitas?${params}`,
       { method: 'GET' }
     );
   }
 
-  async search(query: string, limit: number = 10): Promise<IdentitasDTO[]> {
+  async search(ctx: RequestContext, query: string, limit: number = 10): Promise<IdentitasDTO[]> {
     const params = new URLSearchParams({
       q: query,
       limit: String(limit),
     });
     
     const response = await this.request<{ data: IdentitasDTO[] }>(
+      ctx,
       `/api/identitas/search?${params}`,
       { method: 'GET' }
     );
@@ -78,8 +111,9 @@ export class IdentitasHttpClient implements IdentitasPort {
     return response?.data ?? [];
   }
 
-  async exists(nomorInduk: string): Promise<boolean> {
+  async exists(ctx: RequestContext, nomorInduk: string): Promise<boolean> {
     const response = await this.request<{ exists: boolean }>(
+      ctx,
       `/api/identitas/${encodeURIComponent(nomorInduk)}/exists`,
       { method: 'GET' }
     );
@@ -87,8 +121,9 @@ export class IdentitasHttpClient implements IdentitasPort {
     return response?.exists ?? false;
   }
 
-  async count(): Promise<number> {
+  async count(ctx: RequestContext): Promise<number> {
     const response = await this.request<{ count: number }>(
+      ctx,
       '/api/identitas/count',
       { method: 'GET' }
     );
@@ -96,15 +131,16 @@ export class IdentitasHttpClient implements IdentitasPort {
     return response?.count ?? 0;
   }
 
-  async create(data: CreateIdentitasDTO): Promise<IdentitasDTO> {
-    return this.request<IdentitasDTO>('/api/identitas', {
+  async create(ctx: RequestContext, data: CreateIdentitasDTO): Promise<IdentitasDTO> {
+    return this.request<IdentitasDTO>(ctx, '/api/identitas', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async update(nomorInduk: string, data: UpdateIdentitasDTO): Promise<IdentitasDTO | null> {
+  async update(ctx: RequestContext, nomorInduk: string, data: UpdateIdentitasDTO): Promise<IdentitasDTO | null> {
     return this.request<IdentitasDTO | null>(
+      ctx,
       `/api/identitas/${encodeURIComponent(nomorInduk)}`,
       {
         method: 'PATCH',
@@ -113,9 +149,9 @@ export class IdentitasHttpClient implements IdentitasPort {
     );
   }
 
-  async delete(nomorInduk: string): Promise<boolean> {
+  async delete(ctx: RequestContext, nomorInduk: string): Promise<boolean> {
     try {
-      await this.request<void>(`/api/identitas/${encodeURIComponent(nomorInduk)}`, {
+      await this.request<void>(ctx, `/api/identitas/${encodeURIComponent(nomorInduk)}`, {
         method: 'DELETE',
       });
       return true;
@@ -124,7 +160,7 @@ export class IdentitasHttpClient implements IdentitasPort {
     }
   }
 
-  private async request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  private async request<T>(ctx: RequestContext, path: string, options: RequestOptions = {}): Promise<T> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), options.timeout ?? this.timeout);
     
@@ -132,10 +168,7 @@ export class IdentitasHttpClient implements IdentitasPort {
       const response = await fetch(`${this.baseUrl}${path}`, {
         ...options,
         signal: controller.signal,
-        headers: {
-          ...this.headers,
-          ...options.headers,
-        },
+        headers: this.buildHeaders(ctx, options.headers as Record<string, string> | undefined),
       });
       
       if (!response.ok) {

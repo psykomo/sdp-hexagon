@@ -1,10 +1,10 @@
 # @sdp/runtime
 
-Runtime orchestrator for SDP packages. Provides a unified API to access all services with singleton-perfomance and per-request context.
+Runtime orchestrator for SDP packages. Provides a unified API to access all services with singleton performance.
 
 ## Concept
 
-The runtime follows the **Singleton + Per-Request Context** pattern:
+The runtime follows the **Singleton + Explicit Context** pattern:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -16,15 +16,15 @@ The runtime follows the **Singleton + Per-Request Context** pattern:
 │  └─────────────────────────────────────────────────────────┘   │
 │                                                                  │
 │  ┌─────────────────────────────────────────────────────────┐   │
-│  │  withContext(ctx, fn)  ←── wraps per-request logic     │   │
+│  │  Per-request: create context and pass explicitly       │   │
 │  │  - userId, roles, permissions, requestId               │   │
 │  └─────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│  Services access context via AsyncLocalStorage                  │
-│  No need to pass context through every function call!          │
+│  Services receive context explicitly in each method call       │
+│  context is passed through all function calls                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -54,25 +54,26 @@ function getRequestContext(): RequestContext {
     permissions: session?.permissions ?? [],
     requestId: crypto.randomUUID(),
     startedAt: new Date(),
+    ip: request-ip,
+    userAgent: request.headers.get('user-agent') ?? undefined,
   };
 }
 ```
 
-### 3. Use with Context
+### 3. Pass Context to Service Calls
 
 ```typescript
-import { withContext } from "@sdp/runtime";
 import { runtime } from "@/lib/runtime";
 
 export default async function Page() {
   const context = getRequestContext();
   
-  // All service calls here have access to context
-  const result = withContext(context, () => {
-    const identities = runtime.identitasService.getAll(10);
-    const count = runtime.identitasService.count();
-    return { identities, count };
-  });
+  // Pass context explicitly to each service call
+  const identities = await runtime.identitasService.getAll(context, 10);
+  const count = await runtime.identitasService.count(context);
+  const exists = await runtime.identitasService.exists(context, '12345');
+  
+  return { identities, count, exists };
 }
 ```
 
@@ -94,13 +95,23 @@ interface RequestContext {
 
 ## Authorization
 
-Services enforce permissions automatically:
+Services enforce permissions automatically when you pass context:
 
 ```typescript
+const context = {
+  userId: 'user-1',
+  permissions: ['identitas:read'], // Missing write permission
+  ...
+};
+
 // These will throw "Forbidden" if missing required permission
-await runtime.identitasService.create(data);    // requires identitas:write
-await runtime.identitasService.update(...);      // requires identitas:write
-await runtime.identitasService.delete(...);      // requires identitas:delete
+await runtime.identitasService.create(context, data);   // requires identitas:write
+await runtime.identitasService.update(context, '123', {}); // requires identitas:write
+await runtime.identitasService.delete(context, '123');   // requires identitas:delete
+
+// These are fine
+await runtime.identitasService.getById(context, '123');  // no permission needed (or identitas:read)
+await runtime.identitasService.getAll(context, 10);      // no permission needed
 ```
 
 ## API
@@ -108,20 +119,15 @@ await runtime.identitasService.delete(...);      // requires identitas:delete
 ### `createRuntime(): Runtime`
 Creates or returns the singleton runtime instance. Call once at app startup.
 
-### `withContext<T>(context: RequestContext, fn: () => T): T`
-Executes a function with the given context. The context is available via `getContext()` inside the function.
+### `resetRuntime(): void`
+Resets the singleton instance (mainly for testing).
 
-### `withContextAsync<T>(context: RequestContext, fn: () => Promise<T>): Promise<T>`
-Async version of `withContext`.
-
-### `getContext(): RequestContext | undefined`
-Gets the current request context (if any).
-
-### `getContextOrThrow(): RequestContext`
-Gets the current context or throws if not inside `withContext()`.
-
-### `hasContext(): boolean`
-Check if we're currently inside a context.
+### Runtime Interface
+```typescript
+interface Runtime {
+  identitasService: IdentitasPort;
+}
+```
 
 ## Services
 
@@ -132,5 +138,5 @@ Access to identity/person management. See [@sdp/wbp-identitas](./wbp-identitas/R
 
 ## Related
 
-- [@sdp/shared](./shared/README.md) - Context implementation
+- [@sdp/shared](./shared/README.md) - Context type definition
 - [@sdp/wbp-identitas](./wbp-identitas/README.md) - Identity service

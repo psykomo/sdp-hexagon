@@ -1,5 +1,5 @@
 import { identitasRepository } from '../repository/identitas-repo';
-import { requestContext, type RequestContext } from '@sdp/shared/context';
+import type { RequestContext } from '@sdp/shared/context';
 import type { IdentitasPort } from '../port/identitas-port';
 import type { 
   IdentitasDTO, 
@@ -14,21 +14,11 @@ import type {
  * Implements IdentitasPort for direct function calls.
  * Use this when embedding the package in your app (monolith).
  * 
- * Context-aware: automatically accesses request context via AsyncLocalStorage
+ * Context is passed explicitly to each method for authorization and logging.
  */
 export class IdentitasService implements IdentitasPort {
-  // Get context from AsyncLocalStorage (undefined if not in a request)
-  private get ctx(): RequestContext | undefined {
-    return requestContext.get();
-  }
-
   // Helper to require specific permissions
-  private requirePermissions(...required: string[]): void {
-    const ctx = this.ctx;
-    if (!ctx) {
-      throw new Error('No request context - wrap with requestContext.run()');
-    }
-    
+  private requirePermissions(ctx: RequestContext, ...required: string[]): void {
     const missing = required.filter(p => !ctx.permissions.includes(p));
     if (missing.length > 0) {
       throw new Error(`Forbidden: missing permissions: ${missing.join(', ')}`);
@@ -36,12 +26,7 @@ export class IdentitasService implements IdentitasPort {
   }
 
   // Helper to require specific roles
-  private requireRoles(...required: string[]): void {
-    const ctx = this.ctx;
-    if (!ctx) {
-      throw new Error('No request context - wrap with requestContext.run()');
-    }
-    
+  private requireRoles(ctx: RequestContext, ...required: string[]): void {
     const hasRole = required.some(r => ctx.userRoles.includes(r));
     if (!hasRole) {
       throw new Error(`Forbidden: requires one of roles: ${required.join(', ')}`);
@@ -49,22 +34,21 @@ export class IdentitasService implements IdentitasPort {
   }
 
   // Log with context info
-  private log(message: string, meta?: Record<string, unknown>): void {
-    const ctx = this.ctx;
+  private log(ctx: RequestContext, message: string, meta?: Record<string, unknown>): void {
     console.log(JSON.stringify({
       message,
-      requestId: ctx?.requestId,
-      userId: ctx?.userId,
+      requestId: ctx.requestId,
+      userId: ctx.userId,
       ...meta,
     }));
   }
 
-  async getById(nomorInduk: string): Promise<IdentitasDTO | null> {
+  async getById(ctx: RequestContext, nomorInduk: string): Promise<IdentitasDTO | null> {
     if (!nomorInduk) {
       throw new Error('nomorInduk is required');
     }
     
-    this.log('getById', { nomorInduk });
+    this.log(ctx, 'getById', { nomorInduk });
     
     const result = await identitasRepository.findById(nomorInduk);
     
@@ -75,8 +59,8 @@ export class IdentitasService implements IdentitasPort {
     return this.toDTO(result);
   }
 
-  async getAll(limit: number = 10, offset: number = 0): Promise<IdentitasListResponse> {
-    this.log('getAll', { limit, offset });
+  async getAll(ctx: RequestContext, limit: number = 10, offset: number = 0): Promise<IdentitasListResponse> {
+    this.log(ctx, 'getAll', { limit, offset });
     
     const [data, total] = await Promise.all([
       identitasRepository.findAll(limit, offset),
@@ -91,28 +75,28 @@ export class IdentitasService implements IdentitasPort {
     };
   }
 
-  async search(query: string, limit: number = 10): Promise<IdentitasDTO[]> {
-    this.log('search', { query, limit });
+  async search(ctx: RequestContext, query: string, limit: number = 10): Promise<IdentitasDTO[]> {
+    this.log(ctx, 'search', { query, limit });
     
     const results = await identitasRepository.search(query, limit);
     return results.map(this.toDTO);
   }
 
-  async count(): Promise<number> {
-    this.log('count');
+  async count(ctx: RequestContext): Promise<number> {
+    this.log(ctx, 'count');
     return identitasRepository.count();
   }
 
-  async exists(nomorInduk: string): Promise<boolean> {
-    this.log('exists', { nomorInduk });
+  async exists(ctx: RequestContext, nomorInduk: string): Promise<boolean> {
+    this.log(ctx, 'exists', { nomorInduk });
     return identitasRepository.exists(nomorInduk);
   }
 
-  async create(data: CreateIdentitasDTO): Promise<IdentitasDTO> {
+  async create(ctx: RequestContext, data: CreateIdentitasDTO): Promise<IdentitasDTO> {
     // Require write permission for create
-    this.requirePermissions('identitas:write');
+    this.requirePermissions(ctx, 'identitas:write');
     
-    this.log('create', { nomorInduk: data.nomorInduk });
+    this.log(ctx, 'create', { nomorInduk: data.nomorInduk });
     
     this.validateCreateData(data);
     
@@ -126,11 +110,11 @@ export class IdentitasService implements IdentitasPort {
     return this.toDTO(result);
   }
 
-  async update(nomorInduk: string, data: UpdateIdentitasDTO): Promise<IdentitasDTO | null> {
+  async update(ctx: RequestContext, nomorInduk: string, data: UpdateIdentitasDTO): Promise<IdentitasDTO | null> {
     // Require write permission for update
-    this.requirePermissions('identitas:write');
+    this.requirePermissions(ctx, 'identitas:write');
     
-    this.log('update', { nomorInduk });
+    this.log(ctx, 'update', { nomorInduk });
     
     if (!nomorInduk) {
       throw new Error('nomorInduk is required');
@@ -145,11 +129,11 @@ export class IdentitasService implements IdentitasPort {
     return result ? this.toDTO(result) : null;
   }
 
-  async delete(nomorInduk: string): Promise<boolean> {
+  async delete(ctx: RequestContext, nomorInduk: string): Promise<boolean> {
     // Require delete permission for delete
-    this.requirePermissions('identitas:delete');
+    this.requirePermissions(ctx, 'identitas:delete');
     
-    this.log('delete', { nomorInduk });
+    this.log(ctx, 'delete', { nomorInduk });
     
     if (!nomorInduk) {
       throw new Error('nomorInduk is required');

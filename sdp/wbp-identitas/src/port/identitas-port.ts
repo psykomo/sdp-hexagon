@@ -1,3 +1,4 @@
+import type { RequestContext } from '@sdp/shared/context';
 import type { 
   IdentitasDTO,
   CreateIdentitasDTO,
@@ -11,14 +12,16 @@ import type {
  * This defines the contract. Implementations can be:
  * - IdentitasService: Direct function calls (library mode)
  * - IdentitasHttpClient: HTTP calls (microservice mode)
+ * 
+ * Context is passed explicitly to each method for authorization and logging.
  */
 export interface IdentitasPort {
-  getById(nomorInduk: string): Promise<IdentitasDTO | null>;
-  getAll(limit?: number, offset?: number): Promise<IdentitasListResponse>;
-  search(query: string, limit?: number): Promise<IdentitasDTO[]>;
-  count(): Promise<number>;
-  exists(nomorInduk: string): Promise<boolean>;
-  create(data: CreateIdentitasDTO): Promise<IdentitasDTO>;
-  update(nomorInduk: string, data: UpdateIdentitasDTO): Promise<IdentitasDTO | null>;
-  delete(nomorInduk: string): Promise<boolean>;
+  getById(ctx: RequestContext, nomorInduk: string): Promise<IdentitasDTO | null>;
+  getAll(ctx: RequestContext, limit?: number, offset?: number): Promise<IdentitasListResponse>;
+  search(ctx: RequestContext, query: string, limit?: number): Promise<IdentitasDTO[]>;
+  count(ctx: RequestContext): Promise<number>;
+  exists(ctx: RequestContext, nomorInduk: string): Promise<boolean>;
+  create(ctx: RequestContext, data: CreateIdentitasDTO): Promise<IdentitasDTO>;
+  update(ctx: RequestContext, nomorInduk: string, data: UpdateIdentitasDTO): Promise<IdentitasDTO | null>;
+  delete(ctx: RequestContext, nomorInduk: string): Promise<boolean>;
 }

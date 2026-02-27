@@ -1,4 +1,4 @@
-import { createRuntime, withContext, type RequestContext } from "@sdp/runtime";
+import { createRuntime, type RequestContext } from "@sdp/runtime";
 
 /**
  * Force dynamic rendering - this page depends on runtime services
@@ -18,12 +18,12 @@ const runtime = createRuntime();
  * Runtime Example
  * 
  * This page demonstrates how to use the @sdp/runtime orchestrator
- * with singleton runtime + per-request context pattern.
+ * with singleton runtime + explicit context passing.
  * 
  * Key concepts:
  * 1. createRuntime() - Creates singleton (expensive ops like DB pools)
- * 2. withContext(ctx, fn) - Runs code with request context (user, roles, permissions)
- * 3. Services access context via AsyncLocalStorage internally
+ * 2. Pass context explicitly to each service call
+ * 3. Services use context for authorization and logging
  */
 export default async function RuntimeExamplePage() {
   // Create context per request (would come from auth/session in real app)
@@ -37,45 +37,12 @@ export default async function RuntimeExamplePage() {
     userAgent: "Mozilla/5.0",
   };
 
-  // All runtime calls within this block have access to context
-  // The context is automatically available in services via requestContext.get()
-  const result = withContext(context, () => {
-    return {
-      // Example 1: Get all identities
-      allIdentities: runtime.identitasService.getAll(10),
-      
-      // Example 2: Check if identity exists
-      exists: runtime.identitasService.exists("12345"),
-      
-      // Example 3: Get identity by ID
-      identity: runtime.identitasService.getById("12345"),
-      
-      // Example 4: Count total identities
-      totalCount: runtime.identitasService.count(),
-      
-      // Example 5: Search identities
-      searchResults: runtime.identitasService.search("john"),
-    };
-  });
-
-  // another example using runtime
-  const myResult = await withContext(context, async () => {
-    const totalCount = await runtime.identitasService.count();
-    const searchResults = await runtime.identitasService.search("john")
-    return {
-      totalCount,
-      searchResults,
-    };
-  });
-
-  // Wait for all promises
-  const [allIdentities, exists, identity, totalCount, searchResults] = await Promise.all([
-    result.allIdentities,
-    result.exists,
-    result.identity,
-    result.totalCount,
-    result.searchResults,
-  ]);
+  // Pass context explicitly to each service call
+  const allIdentities = await runtime.identitasService.getAll(context, 10);
+  const exists = await runtime.identitasService.exists(context, "12345");
+  const identity = await runtime.identitasService.getById(context, "12345");
+  const totalCount = await runtime.identitasService.count(context);
+  const searchResults = await runtime.identitasService.search(context, "john");
 
   return (
     <div className="container mx-auto py-10 px-4">
@@ -83,11 +50,11 @@ export default async function RuntimeExamplePage() {
       
       <div className="space-y-8">
         <section className="p-6 border rounded-lg">
-          <h2 className="text-xl font-semibold mb-4">Pattern: Singleton Runtime + Per-Request Context</h2>
+          <h2 className="text-xl font-semibold mb-4">Pattern: Singleton Runtime + Explicit Context</h2>
           <div className="space-y-2 text-gray-600">
             <p><code>createRuntime()</code> - Creates singleton (called once at app startup)</p>
-            <p><code>withContext(ctx, fn)</code> - Runs code with request context</p>
-            <p><code>runtime.identitasService</code> - Services access context via AsyncLocalStorage</p>
+            <p><code>runtime.identitasService.getById(ctx, id)</code> - Pass context explicitly</p>
+            <p><code>runtime.identitasService.getAll(ctx, limit, offset)</code> - Pass context explicitly</p>
           </div>
         </section>
 
@@ -159,12 +126,10 @@ const context = {
   startedAt: new Date(),
 };
 
-// 3. Wrap runtime calls with context
-import { withContext } from "@sdp/runtime";
-const result = withContext(context, () => {
-  // All service calls here have access to context
-  return runtime.identitasService.getAll(10);
-});`}
+// 3. Pass context explicitly to each service call
+const result = await runtime.identitasService.getAll(context, 10);
+const exists = await runtime.identitasService.exists(context, "12345");
+const identity = await runtime.identitasService.getById(context, "12345");`}
           </pre>
         </section>
 
@@ -172,7 +137,7 @@ const result = withContext(context, () => {
           <h2 className="text-xl font-semibold mb-4">Authorization Demo</h2>
           <p className="text-gray-600 mb-4">
             Try removing <code>identitas:delete</code> from permissions and calling 
-            <code>runtime.identitasService.delete("12345")</code> - it will throw "Forbidden" error.
+            <code>runtime.identitasService.delete(context, "12345")</code> - it will throw "Forbidden" error.
           </p>
           <div className="p-4 bg-yellow-50 border border-yellow-200 rounded">
             <p className="text-yellow-800">

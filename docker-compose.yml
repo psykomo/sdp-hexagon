@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: hexagon-sdp
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sdp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    # Optional: Add pgAdmin for database management
+    # Uncomment to enable pgAdmin
+    # pgadmin:
+    #   image: dpage/pgadmin4
+    #   container_name: hexagon-pgadmin
+    #   restart: unless-stopped
+    #   environment:
+    #     PGADMIN_DEFAULT_EMAIL: admin@example.com
+    #     PGADMIN_DEFAULT_PASSWORD: admin
+    #   ports:
+    #     - "5050:80"
+    #   depends_on:
+    #     - postgres
+
+volumes:
+  postgres_data:
+    driver: local

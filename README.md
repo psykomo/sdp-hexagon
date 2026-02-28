@@ -21,7 +21,8 @@ This repo combines:
 │  ├─ shared/             # Shared types (RequestContext)
 │  ├─ runtime/            # Service orchestrator (singleton runtime)
 │  ├─ database/           # Drizzle schema + migrations + DB client
-│  └─ wbp-identitas/      # Identitas domain (service, repository, HTTP routes/client)
+│  ├─ wbp-identitas/      # Identitas domain (service, repository, HTTP routes/client)
+│  └─ wbp-registrasi/     # Registrasi domain (Clean Architecture example)
 ├─ docker-compose.yml     # Local PostgreSQL
 └─ turbo.json             # Task pipeline
 ```
@@ -34,6 +35,7 @@ This repo combines:
 | `@sdp/runtime` | Singleton runtime that exposes domain services (currently `identitasService`) |
 | `@sdp/database` | PostgreSQL connection, Drizzle schema, migration tooling |
 | `@sdp/wbp-identitas` | Identitas port/service/repository + Express server + HTTP client |
+| `@sdp/wbp-registrasi` | Registrasi port/service/repository + Express server + HTTP client |
 | `apps/web` | Main app; includes `/runtime-example` showing runtime usage |
 | `apps/docs` | Docs-style Next.js app |
 
@@ -196,6 +198,7 @@ pnpm --filter docs dev
 
 - `sdp/runtime/README.md`
 - `sdp/wbp-identitas/README.md`
+- `sdp/wbp-registrasi/README.md`
 - `sdp/database/README.md`
 - `sdp/shared/README.md`
 - `sdp/database/plan.md` (domain/data model notes)

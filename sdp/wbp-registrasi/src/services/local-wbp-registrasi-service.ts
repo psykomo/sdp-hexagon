@@ -1,32 +1,21 @@
 import type { RequestContext } from '@sdp/shared/context';
-import type { RegistrasiServicePort } from '../ports/registrasi-service-port';
 import type {
   RegistrasiDTO,
   CreateRegistrasiDTO,
   UpdateRegistrasiDTO,
   RegistrasiListParams,
   RegistrasiListResponse,
-} from '../types/registrasi';
-
-/**
- * Interface for the repository dependency.
- * We define it here or import it to keep the service decoupled from the specific implementation.
- */
-export interface RegistrasiRepositoryDependency {
-  findAll(params?: RegistrasiListParams): Promise<{ data: RegistrasiDTO[]; total: number }>;
-  findById(id: string): Promise<RegistrasiDTO | null>;
-  create(data: CreateRegistrasiDTO): Promise<RegistrasiDTO>;
-  update(id: string, data: UpdateRegistrasiDTO): Promise<RegistrasiDTO>;
-  delete(id: string): Promise<void>;
-}
+} from '../contracts/types';
+import { WbpRegistrasiService } from '@/contracts/wbp-registrasi-service';
+import { WbpRegistrasiRepository } from '@/contracts/wbp-registrasi-repository';
 
 /**
  * RegistrasiService - Business logic layer (Core)
  * 
- * Uses Dependency Injection for its repository.
+ * Uses Dependency Injection for its repository through a secondary Port.
  */
-export class RegistrasiService implements RegistrasiServicePort {
-  constructor(private readonly repo: RegistrasiRepositoryDependency) {}
+export class LocalWbpRegistrasiService implements WbpRegistrasiService {
+  constructor(private readonly repo: WbpRegistrasiRepository) {}
 
   private log(ctx: RequestContext, message: string, meta?: Record<string, unknown>): void {
     console.log(JSON.stringify({

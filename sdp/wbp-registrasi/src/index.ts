@@ -1,31 +1,39 @@
-// Core Ports & Types
-export type { RegistrasiServicePort } from './core/ports/registrasi-service-port';
-export type {
-  RegistrasiDTO,
-  CreateRegistrasiDTO,
-  UpdateRegistrasiDTO,
-  RegistrasiListParams,
-  RegistrasiListResponse,
-} from './core/types/registrasi';
+// // Core Ports & Types
+// export type {
+//   RegistrasiDTO,
+//   CreateRegistrasiDTO,
+//   UpdateRegistrasiDTO,
+//   RegistrasiListParams,
+//   RegistrasiListResponse,
+// } from './registrasi.types';
 
-// Core Service
-export { RegistrasiService } from './core/service/registrasi-service';
+// // Core Service
+// export { RegistrasiService } from './registrasi.service';
 
-// Infra - DB
-export { RegistrasiRepository, registrasiRepository } from './infra/db/registrasi-repo';
+// // Infra - DB
+// export { RegistrasiRepository, registrasiRepository } from './registrasi.repo';
 
-// Infra - HTTP
-export { createRegistrasiRouter } from './infra/http/registrasi-routes';
+// // Infra - HTTP
+// export { createRegistrasiRouter } from './http/registrasi.routes';
 
-// Infra - Client
-export { RegistrasiHttpClient, createRegistrasiClient } from './infra/client/registrasi-client';
+// // Infra - Client
 
-// --- Singleton / Default Instances ---
-import { RegistrasiService } from './core/service/registrasi-service';
-import { registrasiRepository } from './infra/db/registrasi-repo';
+// // --- Singleton / Default Instances ---
+// import { RegistrasiService } from './registrasi.service';
+// import { registrasiRepository } from './registrasi.repo';
 
-/**
- * Default singleton instance for local/library usage.
- * Injected with the real repository.
- */
-export const registrasiService = new RegistrasiService(registrasiRepository);
+// /**
+//  * Default singleton instance for local/library usage.
+//  * Injected with the real repository.
+//  */
+// export const registrasiService = new RegistrasiService(registrasiRepository);
+
+import { WbpRegistrasiService } from "./contracts/wbp-registrasi-service";
+import { DrizzleWbpRegistrasiRepository } from "./persistence/drizzle-wbp-registrasi-repo";
+import { LocalWbpRegistrasiService } from "./services/local-wbp-registrasi-service";
+import { RemoteWbpRegistrasiService } from "./services/remote-wbp-registrasi-service";
+
+const wbpRegistrasiRepo = new DrizzleWbpRegistrasiRepository();
+
+export const localWbpRegistrasiService = new LocalWbpRegistrasiService(wbpRegistrasiRepo);
+export { RemoteWbpRegistrasiService, WbpRegistrasiService }

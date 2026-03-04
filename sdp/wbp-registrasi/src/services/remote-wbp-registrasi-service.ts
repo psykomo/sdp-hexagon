@@ -1,12 +1,12 @@
 import { RequestContext } from '@sdp/shared';
-import { RegistrasiServicePort } from '../../core/ports/registrasi-service-port';
 import {
   RegistrasiDTO,
   CreateRegistrasiDTO,
   UpdateRegistrasiDTO,
   RegistrasiListParams,
   RegistrasiListResponse,
-} from '../../core/types/registrasi';
+} from '../contracts/types';
+import { WbpRegistrasiService } from '@/contracts/wbp-registrasi-service';
 
 export interface ClientConfig {
   baseUrl: string;
@@ -18,7 +18,7 @@ interface RequestOptions extends RequestInit {
   timeout?: number;
 }
 
-export class RegistrasiHttpClient implements RegistrasiServicePort {
+export class RemoteWbpRegistrasiService implements WbpRegistrasiService {
   private baseUrl: string;
   private timeout: number;
   private defaultHeaders: Record<string, string>;
@@ -130,5 +130,5 @@ export class RegistrasiHttpClient implements RegistrasiServicePort {
 }
 
 export function createRegistrasiClient(config: ClientConfig) {
-  return new RegistrasiHttpClient(config);
+  return new RemoteWbpRegistrasiService(config);
 }

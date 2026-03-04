@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { registrasiService } from './index';
-import { createRegistrasiRouter } from './infra/http/registrasi-routes';
+import { createRegistrasiRouter } from './http/registrasi.routes';
+import { localWbpRegistrasiService } from './index';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ export function createApp() {
   });
 
   // Wire the router with the service instance
-  app.use('/api/registrasi', createRegistrasiRouter(registrasiService));
+  app.use('/api/registrasi', createRegistrasiRouter(localWbpRegistrasiService));
 
   return app;
 }

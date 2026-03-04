@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "@sdp/shared": "workspace:^",
-    "@sdp/wbp-identitas": "workspace:^"
+    "@sdp/wbp-identitas": "workspace:^",
+    "@sdp/wbp-registrasi": "workspace:^"
   }
 }

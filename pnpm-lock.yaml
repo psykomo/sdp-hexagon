@@ -192,6 +192,9 @@ importers:
       '@sdp/wbp-identitas':
         specifier: workspace:^
         version: link:../wbp-identitas
+      '@sdp/wbp-registrasi':
+        specifier: workspace:^
+        version: link:../wbp-registrasi
 
   sdp/shared:
     devDependencies:

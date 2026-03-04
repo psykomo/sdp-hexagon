@@ -1,5 +1,6 @@
 import { type IdentitasPort, IdentitasService, createIdentitasClient } from '@sdp/wbp-identitas';
 import type { RequestContext } from '@sdp/shared/context';
+import { localWbpRegistrasiService, RemoteWbpRegistrasiService, WbpRegistrasiService } from '@sdp/wbp-registrasi';
 
 export const name = "@sdp/runtime";
 
@@ -18,6 +19,7 @@ export type { RequestContext } from '@sdp/shared/context';
 export interface Runtime {
   /** Identity/Person management service */
   identitasService: IdentitasPort;
+  wbpRegistrasiService: WbpRegistrasiService;
 }
 
 // Singleton instance
@@ -37,9 +39,18 @@ export function createRuntime(): Runtime {
   runtimeInstance = {
     // All services share the same singleton instances
     identitasService: new IdentitasService(),
-
     // use this to use identitas microservice
     // identitasService: createIdentitasClient(),
+
+    wbpRegistrasiService: localWbpRegistrasiService,
+    // use this to use registrasi microservice
+    // wbpRegistrasiService: new RemoteWbpRegistrasiService( {
+    //   baseUrl: 'http://localhost:3000',
+    //   timeout: 10000,
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // }),
   };
 
   return runtimeInstance;

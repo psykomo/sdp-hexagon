@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { RegistrasiServicePort } from '../../core/ports/registrasi-service-port';
 import { RequestContext } from '@sdp/shared';
+import { WbpRegistrasiService } from '../contracts/wbp-registrasi-service';
 
-export function createRegistrasiRouter(service: RegistrasiServicePort) {
+export function createRegistrasiRouter(service: WbpRegistrasiService) {
   const router = Router();
 
   // Middleware to extract context (placeholder)

@@ -1,6 +1,6 @@
 import { type IdentitasPort, IdentitasService, createIdentitasClient } from '@sdp/wbp-identitas';
 import type { RequestContext } from '@sdp/shared/context';
-import { localWbpRegistrasiService, RemoteWbpRegistrasiService, WbpRegistrasiService } from '@sdp/wbp-registrasi';
+import { createWbpRegistrasiService, WbpRegistrasiService } from '@sdp/wbp-registrasi';
 
 export const name = "@sdp/runtime";
 
@@ -42,9 +42,9 @@ export function createRuntime(): Runtime {
     // use this to use identitas microservice
     // identitasService: createIdentitasClient(),
 
-    wbpRegistrasiService: localWbpRegistrasiService,
+    wbpRegistrasiService: createWbpRegistrasiService(false),
     // use this to use registrasi microservice
-    // wbpRegistrasiService: new RemoteWbpRegistrasiService( {
+    // wbpRegistrasiService: createWbpRegistrasiService(true, {
     //   baseUrl: 'http://localhost:3000',
     //   timeout: 10000,
     //   headers: {

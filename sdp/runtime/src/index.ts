@@ -1,5 +1,4 @@
 import { type IdentitasPort, IdentitasService, createIdentitasClient } from '@sdp/wbp-identitas';
-import type { RequestContext } from '@sdp/shared/context';
 import { createWbpRegistrasiService, WbpRegistrasiService } from '@sdp/wbp-registrasi';
 
 export const name = "@sdp/runtime";

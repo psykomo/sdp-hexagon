@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { RequestContext } from '@sdp/shared';
-import { WbpRegistrasiService } from '../contracts/wbp-registrasi-service';
+import type { WbpRegistrasiService } from '../contracts/wbp-registrasi-service';
 
 export function createRegistrasiRouter(service: WbpRegistrasiService) {
   const router = Router();

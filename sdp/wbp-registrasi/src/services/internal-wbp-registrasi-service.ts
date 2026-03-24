@@ -6,7 +6,7 @@ import type {
   RegistrasiListParams,
   RegistrasiListResponse,
 } from '../contracts/types';
-import { WbpRegistrasiService } from '@/contracts/wbp-registrasi-service';
+import type { WbpRegistrasiService } from '@/contracts/wbp-registrasi-service';
 import { WbpRegistrasiRepository } from '@/contracts/wbp-registrasi-repository';
 
 /**
@@ -14,7 +14,7 @@ import { WbpRegistrasiRepository } from '@/contracts/wbp-registrasi-repository';
  * 
  * Uses Dependency Injection for its repository through a secondary Port.
  */
-export class LocalWbpRegistrasiService implements WbpRegistrasiService {
+export class InternalWbpRegistrasiService implements WbpRegistrasiService {
   constructor(private readonly repo: WbpRegistrasiRepository) {}
 
   private log(ctx: RequestContext, message: string, meta?: Record<string, unknown>): void {

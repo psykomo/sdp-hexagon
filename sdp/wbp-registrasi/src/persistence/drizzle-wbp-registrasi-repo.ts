@@ -49,4 +49,4 @@ export class DrizzleWbpRegistrasiRepository implements WbpRegistrasiRepository {
   }
 }
 
-export const registrasiRepository = new DrizzleWbpRegistrasiRepository();
+export const drizzleRegistrasiRepository = new DrizzleWbpRegistrasiRepository();

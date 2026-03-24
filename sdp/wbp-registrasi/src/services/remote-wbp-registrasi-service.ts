@@ -6,7 +6,7 @@ import {
   RegistrasiListParams,
   RegistrasiListResponse,
 } from '../contracts/types';
-import { WbpRegistrasiService } from '@/contracts/wbp-registrasi-service';
+import type { WbpRegistrasiService } from '@/contracts/wbp-registrasi-service';
 
 export interface ClientConfig {
   baseUrl: string;
